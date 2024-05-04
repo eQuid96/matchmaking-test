@@ -1,0 +1,106 @@
+<mxfile host="65bd71144e">
+    <diagram id="KzIOHkdXMPQq8UtA9u8y" name="Page-1">
+        <mxGraphModel dx="2497" dy="1147" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="14" style="edgeStyle=none;html=1;startArrow=none;" edge="1" parent="1" source="76" target="7">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Matchmaking&lt;br&gt;Service" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="157.5" y="460" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="Players&lt;br&gt;Ticket inMemory Pool" style="shape=datastore;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="167.5" y="190" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" style="html=1;entryX=0.667;entryY=1.017;entryDx=0;entryDy=0;entryPerimeter=0;elbow=vertical;" edge="1" parent="1" source="18" target="5">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="126" style="html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="18" target="115">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="127" style="html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="18" target="120">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="Load Balancer" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="72.5" y="570" width="690" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="54" value="" style="group" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="10" y="630" width="610" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="" style="shape=actor;whiteSpace=wrap;html=1;" vertex="1" parent="54">
+                    <mxGeometry x="423.3299999999999" y="110" width="53.34" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="OnMatchFoundEvent" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=20;notch2=0;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#FFFFFF;flipH=0;spacingRight=0;spacingLeft=14;" vertex="1" parent="54">
+                    <mxGeometry y="80" width="180" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="OnMatchNotFoundEvent" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=20;notch2=0;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#FFFFFF;flipH=0;spacingRight=0;spacingLeft=14;" vertex="1" parent="54">
+                    <mxGeometry y="180" width="180" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="Matchmaking&lt;br&gt;Request" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="54">
+                    <mxGeometry x="305" y="20" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" value="Cancel Matchmaking&lt;br&gt;Request" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="54">
+                    <mxGeometry x="470" y="20" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;rotation=90;" vertex="1" parent="54">
+                    <mxGeometry x="445" y="-50" width="20" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="52" value="Listen for events" style="edgeStyle=none;html=1;entryX=0.1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="54" source="51" target="8">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="51" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;" vertex="1" parent="54">
+                    <mxGeometry x="180" y="90" width="20" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;rotation=90;size=0.5;" vertex="1" parent="54">
+                    <mxGeometry x="440" y="40" width="20" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="78" value="" style="edgeStyle=none;html=1;endArrow=none;" edge="1" parent="1" source="5" target="76">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="225" y="460" as="sourcePoint"/>
+                        <mxPoint x="225" y="340" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="76" value="Main loop&lt;br&gt;Execute matchmaking logic every X seconds" style="points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];shape=mxgraph.bpmn.task;whiteSpace=wrap;rectStyle=rounded;size=10;html=1;taskMarker=abstract;bpmnShapeType=subprocess;isLoopSub=1;outline=eventNonint;symbol=timer;" vertex="1" parent="1">
+                    <mxGeometry x="150" y="320" width="135" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="114" style="edgeStyle=none;html=1;startArrow=none;" edge="1" parent="1" source="118" target="116">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="115" value="Matchmaking&lt;br&gt;Service" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="357.5" y="460" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="116" value="Players&lt;br&gt;Ticket inMemory Pool" style="shape=datastore;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="367.5" y="190" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="117" value="" style="edgeStyle=none;html=1;endArrow=none;" edge="1" parent="1" source="115" target="118">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="425" y="460" as="sourcePoint"/>
+                        <mxPoint x="425" y="340" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="118" value="Main loop&lt;br&gt;Execute matchmaking logic every X seconds" style="points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];shape=mxgraph.bpmn.task;whiteSpace=wrap;rectStyle=rounded;size=10;html=1;taskMarker=abstract;bpmnShapeType=subprocess;isLoopSub=1;outline=eventNonint;symbol=timer;" vertex="1" parent="1">
+                    <mxGeometry x="350" y="320" width="135" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="119" style="edgeStyle=none;html=1;startArrow=none;" edge="1" parent="1" source="123" target="121">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="120" value="Matchmaking&lt;br&gt;Service" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="527.5" y="460" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="121" value="Players&lt;br&gt;Ticket inMemory Pool" style="shape=datastore;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="537.5" y="190" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="122" value="" style="edgeStyle=none;html=1;endArrow=none;" edge="1" parent="1" source="120" target="123">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="595" y="460" as="sourcePoint"/>
+                        <mxPoint x="595" y="340" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="123" value="Main loop&lt;br&gt;Execute matchmaking logic every X seconds" style="points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];shape=mxgraph.bpmn.task;whiteSpace=wrap;rectStyle=rounded;size=10;html=1;taskMarker=abstract;bpmnShapeType=subprocess;isLoopSub=1;outline=eventNonint;symbol=timer;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="320" width="135" height="120" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
