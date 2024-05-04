@@ -73,10 +73,7 @@ class MatchmakingService {
   private static currentTicketId = 0;
   private readonly DEFAULT_TIMEOUT_MS: number = 30 * 1000; // 30 seconds
 
-  public constructor(
-    private readonly players: PlayersPool,
-    private readonly ruleMatcher: IPlayerMatcher
-  ) {}
+  public constructor(private readonly players: PlayersPool, private readonly ruleMatcher: IPlayerMatcher) {}
 
   public addRequest(request: MatchmakingRequest) {
     //assume that only one matchmakingrequest per player can occur
@@ -104,10 +101,7 @@ class MatchmakingService {
     }
 
     const ticketsCopy = Array.from(this.activeTickets.values());
-    const { matchedTickets, expiredTickets } = this.executeMatchMaking(
-      ticketsCopy,
-      currentTime
-    );
+    const { matchedTickets, expiredTickets } = this.executeMatchMaking(ticketsCopy, currentTime);
 
     //delete all expired tickets.
     for (const ticket of expiredTickets) {
@@ -117,9 +111,7 @@ class MatchmakingService {
     for (let i = 0; i < matchedTickets.length; i++) {
       const ticket = matchedTickets[i];
       //check if all players in the matched ticket are still valid.
-      var areStillValid = ticket.matchedPlayerIds.some((playerId) =>
-        this.activeTickets.has(playerId)
-      );
+      var areStillValid = ticket.matchedPlayerIds.some((playerId) => this.activeTickets.has(playerId));
       if (!areStillValid) {
         matchedTickets.splice(i, 1);
         continue;
@@ -139,7 +131,7 @@ class MatchmakingService {
     };
 
     for (let i = 0; i < tickets.length; i++) {
-      const ticket = this.activeTickets[i];
+      const ticket = tickets[i];
       //handle expired tickets
       const isTicketExpired = currentTime >= ticket.expireAt;
       if (isTicketExpired) {
