@@ -23,7 +23,6 @@ export class MatchmakingService {
 
   public addRequest(request: MatchmakingRequest) {
     //assume that only one matchmakingrequest per player can occurr
-
     this.playerPool[request.playerId] = this.playerService.getPlayerBydId(request.playerId);
 
     this.activeTickets.set(request.playerId, {
@@ -44,7 +43,6 @@ export class MatchmakingService {
   public run(): MatchmakingResult | undefined {
     //TODO: ADD A CORUTINE HERE
 
-    //search for expired tickets
     const currentTime = Date.now();
     //no active tickets skip execution
     if (this.activeTickets.size <= 0) {
@@ -68,11 +66,14 @@ export class MatchmakingService {
       }
     }
 
+    //all matched tickets at this point are valid so we can delete them
     for (const ticket of matchedTickets) {
-      //ticket is valid so remove from the active tickets
       this.activeTickets.delete(ticket.playerId);
     }
 
+    //TODO: create matches and send MatchFoundEvents and MatchNotFoundEvents to players.
     return { matchedTickets, expiredTickets };
   }
+
+  //TOOD: Add CancelMatchmakingRequest
 }
