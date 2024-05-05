@@ -1,5 +1,5 @@
-import { DummyPlayerMatcher, DummyPlayerService, MatchmakingService, type Player } from "./matchmaking-service.js";
-import type { Rule } from "./rule-matcher.js";
+import { DummyPlayerService, MatchmakingService } from "./matchmaking-service.js";
+import type { Player } from "./matchmaking-types.js";
 
 const fakePlayers: Record<number, Player> = {
   1: {
@@ -28,9 +28,8 @@ const fakePlayers: Record<number, Player> = {
   },
 };
 
-const dummyMatcher = new DummyPlayerMatcher();
 const playerService = new DummyPlayerService(fakePlayers);
-const matchmakingService = new MatchmakingService(dummyMatcher, playerService);
+const matchmakingService = new MatchmakingService(playerService);
 
 matchmakingService.addRequest({
   playerId: 2,

@@ -1,76 +1,5 @@
-import { RuleMatcher, type Rule } from "./rule-matcher.js";
-type MatchRequestState = "matched" | "canceled" | "searching" | "notfound";
-type PlayerProperty = string;
-type PlayerPropertyValue = number;
-
-export type Player = {
-  id: number;
-  username: string;
-  properties: Record<PlayerProperty, PlayerPropertyValue>;
-};
-
-export type MatchmakingRequest = {
-  playerId: number;
-  minPlayers: number;
-  maxPlayers: number;
-  matchingRule: Rule;
-};
-
-export type MatchmakingTicket = {
-  playerId: number;
-  ticketId: number;
-  minPlayers: number;
-  maxPlayers: number;
-  matchingRule: Rule;
-  createdAt: number;
-  expireAt: number;
-  timeOut: number;
-  status: MatchRequestState;
-  matchedPlayerIds: number[];
-};
-
-export type MatchmakingResult = {
-  matchedTickets: MatchmakingTicket[];
-  expiredTickets: MatchmakingTicket[];
-};
-
-export interface IPlayerMatcher {
-  match(
-    currentTicket: MatchmakingTicket,
-    activeTickets: MatchmakingTicket[],
-    playerPool: Record<number, Player>
-  ): Player[];
-}
-
-export class DummyPlayerMatcher implements IPlayerMatcher {
-  public match(
-    currentTicket: MatchmakingTicket,
-    activeTickets: MatchmakingTicket[],
-    playerPool: Record<number, Player>
-  ): Player[] {
-    const result: Player[] = [];
-    for (const otherTicket of activeTickets) {
-      const otherPlayer = playerPool[otherTicket.playerId];
-      const currentPlayer = playerPool[currentTicket.playerId];
-      // skip current player
-      if (currentTicket.ticketId == otherTicket.ticketId) {
-        continue;
-      }
-      if (result.length == currentTicket.maxPlayers) {
-        break;
-      }
-
-      //To find a match the rule of currentPlayer must match with otherPlayer and vice versa
-      if (
-        RuleMatcher.match(currentTicket.matchingRule, otherPlayer.properties) &&
-        RuleMatcher.match(otherTicket.matchingRule, currentPlayer.properties)
-      ) {
-        result.push(otherPlayer);
-      }
-    }
-    return result;
-  }
-}
+import { Matchmaker } from "./matchmaker.js";
+import type { MatchmakingRequest, MatchmakingResult, MatchmakingTicket, Player } from "./matchmaking-types.js";
 
 export interface IPlayerService {
   getPlayerBydId(playerId: number): Player;
@@ -90,7 +19,7 @@ export class MatchmakingService {
   private readonly DEFAULT_TIMEOUT_MS: number = 30 * 1000; // 30 seconds
 
   private readonly playerPool: Record<number, Player> = {};
-  public constructor(private readonly playerMatcher: IPlayerMatcher, private readonly playerService: IPlayerService) {}
+  public constructor(private readonly playerService: IPlayerService) {}
 
   public addRequest(request: MatchmakingRequest) {
     //assume that only one matchmakingrequest per player can occurr
@@ -113,6 +42,8 @@ export class MatchmakingService {
   }
 
   public run(): MatchmakingResult | undefined {
+    //TODO: ADD A CORUTINE HERE
+
     //search for expired tickets
     const currentTime = Date.now();
     //no active tickets skip execution
@@ -121,7 +52,7 @@ export class MatchmakingService {
     }
 
     const ticketsCopy = Array.from(this.activeTickets.values());
-    const { matchedTickets, expiredTickets } = this.executeMatchMaking(ticketsCopy, currentTime);
+    const { matchedTickets, expiredTickets } = Matchmaker.executeMatchMaking(ticketsCopy, currentTime, this.playerPool);
 
     //delete all expired tickets.
     for (const ticket of expiredTickets) {
@@ -142,48 +73,5 @@ export class MatchmakingService {
     }
 
     return { matchedTickets, expiredTickets };
-  }
-
-  private executeMatchMaking(tickets: MatchmakingTicket[], currentTime: number) {
-    const result: MatchmakingResult = {
-      matchedTickets: [],
-      expiredTickets: [],
-    };
-
-    for (let i = 0; i < tickets.length; i++) {
-      const ticket = tickets[i];
-      //handle expired tickets
-      const isTicketExpired = currentTime >= ticket.expireAt;
-      if (isTicketExpired) {
-        //check if fullfill the minimal requirments
-        if (this.isMinimalRequirementsMeet(ticket)) {
-          ticket.status = "matched";
-          result.matchedTickets.push(ticket);
-        } else {
-          ticket.status = "notfound";
-          result.expiredTickets.push(ticket);
-        }
-      } else {
-        //at this points we have not expired ticket so try to find a best match.
-        const foundedPlayers = this.searchMatchablePlayers(ticket, tickets);
-        if (ticket.maxPlayers == foundedPlayers.length) {
-          //best match found.
-          ticket.matchedPlayerIds = foundedPlayers.map((player) => player.id);
-          ticket.status = "matched";
-          result.matchedTickets.push(ticket);
-        }
-      }
-    }
-    return result;
-  }
-
-  private isMinimalRequirementsMeet(ticket: MatchmakingTicket) {
-    //handle logic to check minimal ticket requirments
-    return ticket.matchedPlayerIds.length >= ticket.minPlayers;
-  }
-
-  private searchMatchablePlayers(currentTicket: MatchmakingTicket, activeTickets: MatchmakingTicket[]): Player[] {
-    //handle logic that search players from the pool base on the ticket rules
-    return this.playerMatcher.match(currentTicket, activeTickets, this.playerPool);
   }
 }
