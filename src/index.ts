@@ -67,14 +67,17 @@ matchmakingService.addRequest({
 const result = matchmakingService.run();
 
 if (result) {
-  const tableData = result.matchedTickets.map((ticket) => ({
-    PlayerId: ticket.playerId,
-    MatchedPlayerIds: ticket.matchedPlayerIds.join(", "),
-    MinPlayers: ticket.minPlayers,
-    MaxPlayers: ticket.maxPlayers,
-    Status: ticket.status,
-    MatchingRule: JSON.stringify(ticket.matchingRule),
-  }));
+  const table: Record<number, object> = {};
+  for (const matchedTicket of result.matchedTickets) {
+    table[matchedTicket.ticketId] = {
+      PlayerId: matchedTicket.playerId,
+      MatchedPlayerIds: matchedTicket.matchedPlayerIds.join(", "),
+      MinPlayers: matchedTicket.minPlayers,
+      MaxPlayers: matchedTicket.maxPlayers,
+      Status: matchedTicket.status,
+      MatchingRule: JSON.stringify(matchedTicket.matchingRule),
+    };
+  }
   console.log("\nMatched Tickets:");
-  console.table(tableData);
+  console.table(table);
 }

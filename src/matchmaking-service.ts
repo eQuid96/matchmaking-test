@@ -58,16 +58,17 @@ export class MatchmakingService {
     for (const ticket of expiredTickets) {
       this.activeTickets.delete(ticket.playerId);
     }
-
     for (let i = 0; i < matchedTickets.length; i++) {
       const ticket = matchedTickets[i];
       //check if all players in the matched ticket are still valid.
-      var areStillValid = ticket.matchedPlayerIds.some((playerId) => this.activeTickets.has(playerId));
+      const areStillValid = ticket.matchedPlayerIds.every((playerId) => this.activeTickets.has(playerId));
       if (!areStillValid) {
         matchedTickets.splice(i, 1);
         continue;
       }
+    }
 
+    for (const ticket of matchedTickets) {
       //ticket is valid so remove from the active tickets
       this.activeTickets.delete(ticket.playerId);
     }

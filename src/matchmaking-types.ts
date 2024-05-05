@@ -39,4 +39,4 @@ export type MatchingStrategyFn = (
   currentTicket: MatchmakingTicket,
   activeTickets: MatchmakingTicket[],
   playerPool: Record<number, Player>
-) => Player[];
+) => MatchmakingTicket[];
