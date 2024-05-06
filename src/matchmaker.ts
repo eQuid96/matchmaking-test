@@ -19,7 +19,6 @@ export class Matchmaker {
       if (ticket.status === "matched") {
         continue;
       }
-      //at this points we have not expired ticket so try to find a best match.
       const foundedPlayers = matchingStrategy(ticket, tickets, playerPool);
       const isTicketExpired = currentTime >= ticket.expireAt;
       if (isTicketExpired) {

@@ -23,6 +23,10 @@ export class MatchmakingService {
 
   public addRequest(request: MatchmakingRequest) {
     //assume that only one matchmakingrequest per player can occurr
+    if (this.activeTickets.has(request.playerId)) {
+      return;
+    }
+
     this.playerPool[request.playerId] = this.playerService.getPlayerBydId(request.playerId);
 
     this.activeTickets.set(request.playerId, {
